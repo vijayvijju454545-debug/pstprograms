@@ -1,0 +1,25 @@
+class Solution:
+    def findAndReplacePattern(self, words, pattern):
+        result = []
+
+        for word in words:
+            map1 = {}
+            map2 = {}
+            match = True
+
+            for a, b in zip(word, pattern):
+                if a in map1 and map1[a] != b:
+                    match = False
+                    break
+
+                if b in map2 and map2[b] != a:
+                    match = False
+                    break
+
+                map1[a] = b
+                map2[b] = a
+
+            if match:
+                result.append(word)
+
+        return result
