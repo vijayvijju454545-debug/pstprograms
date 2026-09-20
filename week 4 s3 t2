@@ -1,0 +1,36 @@
+class Solution:
+    def findAnagrams(self, s, p):
+        result = []
+
+        if len(s) < len(p):
+            return result
+
+        count = [0] * 26
+
+        for c in p:
+            count[ord(c) - ord('a')] += 1
+
+        left = 0
+        required = len(p)
+
+        for right in range(len(s)):
+            index = ord(s[right]) - ord('a')
+
+            if count[index] > 0:
+                required -= 1
+
+            count[index] -= 1
+
+            if right - left + 1 > len(p):
+                index = ord(s[left]) - ord('a')
+                count[index] += 1
+
+                if count[index] > 0:
+                    required += 1
+
+                left += 1
+
+            if required == 0:
+                result.append(left)
+
+        return result
